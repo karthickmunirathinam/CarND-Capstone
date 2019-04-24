@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/karthick/Documents/Udacity/final_project/CarND-Capstone/ros/devel/include",
+        "/opt/ros/kinetic/include",
+        "/home/karthick/Documents/Udacity/final_project/CarND-Capstone/ros/src/waypoint_follower/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}
