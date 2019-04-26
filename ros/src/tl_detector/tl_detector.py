@@ -14,7 +14,6 @@ from scipy.spatial import KDTree
 import numpy as np
 
 STATE_COUNT_THRESHOLD = 3
-LOOKAHEAD_WPS = 50
 
 class TLDetector(object):
     def __init__(self):
@@ -38,7 +37,7 @@ class TLDetector(object):
         rely on the position of the light and the camera image to predict it.
         '''
         sub3 = rospy.Subscriber('/vehicle/traffic_lights', TrafficLightArray, self.traffic_cb)
-        sub6 = rospy.Subscriber('/image_color', Image, self.image_cb, queue_size=1)
+        sub6 = rospy.Subscriber('/image_color', Image, self.image_cb)
 
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
@@ -162,17 +161,15 @@ class TLDetector(object):
                 d = temp_wp_idx - car_wp_index
                 # stop light wp is ahead of car and behind end
                 if d>= 0 and d < diff:
-                    diff = d
-                    #perform classification only when light intercepting waypoints
-                    if d < LOOKAHEAD_WPS * 2:
-                        closest_light = light
-                        stop_line_wp_idx = temp_wp_idx
+                    diff = d 
+                    closest_light = light
+                    stop_line_wp_idx = temp_wp_idx
 
-        if closest_light:
+        if closest_light is not None:
             light_state = self.get_light_state(closest_light)
-            return stop_line_wp_idx, light_state
+            return stop_line_wp_idx, light_state 
 
-        # default state
+        # default state    
         return -1, TrafficLight.UNKNOWN
 
 if __name__ == '__main__':
